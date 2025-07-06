@@ -1,0 +1,100 @@
+{% extends 'admin/layout/base.html' %}
+{% block title %}{{ page_title }}{% endblock %}
+{% block content %}
+{% include 'admin/components/breadcrumb.html' %}
+    <div class="card">
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Tiêu đề</th>
+                        <th>Tác giả</th>
+                        <th></th>
+                        <th></th>
+                        <th>Trạng thái</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for post in posts %}
+                    <tr id="post-{{ post.id }}">
+                        <td>{{ loop.index }}</td>
+                        <td>{{ post.title }}</td>
+                        <td>{{ post.author_id }}</td>
+                        <td></td>
+                        <td></td>
+                        <td>{{ post.status }}</td>
+                        <td>
+                            <div class="d-flex order-actions">
+                                <a href="" class="text-primary"><i class="lni lni-eye"></i></a>
+                                <a href="{{ url_for('admin.post_edit', page_type=page_type, post_id=post.id) }}" class="mx-2 text-warning"><i class="bx bxs-edit"></i></a>
+                                <a href="#" class="delete-post text-danger" data-id="{{ post.id }}" data-type="{{ page_type }}"><i class="bx bxs-trash"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+class PostDeleter {
+    constructor(selector) {
+        this.buttons = document.querySelectorAll(selector);
+        this.init();
+    }
+
+    init() {
+        this.buttons.forEach(button => {
+            button.addEventListener('click', (event) => this.handleDelete(event, button));
+        });
+    }
+
+    async handleDelete(event, button) {
+        event.preventDefault();
+        const postId = button.dataset.id;
+        const pageType = button.dataset.type;
+        console.log(pageType)
+        if (!postId || !pageType) return;
+
+        if (!confirm('Bạn có chắc chắn muốn xoá bài viết này?')) return;
+
+        try {
+            const response = await fetch(`/admin/post/delete?post_id=${postId}&page_type=${pageType}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': this.getCSRFToken()
+                }
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                const row = document.getElementById(`post-${postId}`);
+                if (row) row.remove();
+                location.reload(); // để hiển thị flash
+            } else {
+                alert(data.message || 'Xoá thất bại');
+            }
+        } catch (err) {
+            console.error('Xoá lỗi:', err);
+            alert('Có lỗi xảy ra.');
+        }
+    }
+
+    getCSRFToken() {
+        const token = document.querySelector('meta[name="csrf-token"]');
+        return token ? token.getAttribute('content') : '';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    new PostDeleter('.delete-post');
+});
+</script>
+{% endblock %}

@@ -1,0 +1,12 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+}
+.hero { display: flex; align-items: center; justify-content: space-between; padding: 4rem 2rem; background: #eef3fb; }
+.hero-text { max-width: 50%; }
+    .hero h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+    .hero p { margin-bottom: 1.5rem; font-size: 1.1rem; }

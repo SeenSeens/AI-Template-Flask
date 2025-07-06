@@ -1,0 +1,102 @@
+{% extends 'admin/layout/base.html' %}
+{% block title %}{{ page_title }}{% endblock %}
+{% block content %}
+{% include 'admin/components/breadcrumb.html' %}
+    <div class="card">
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên người dùng</th>
+                        <th>Email</th>
+                        <th>Vai trò</th>
+                        <th>Trạng thái</th>
+                        <th>Ngày khời tạo</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr id="user-{{ user.id }}">
+                        <td>{{ loop.index }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.role }}</td>
+                        <td>{{ user.status }}</td>
+                        <td>{{ user.created_at }}</td>
+                        <td>
+                            <div class="d-flex order-actions">
+                                <a href="{{ url_for('admin.profile', user_id=user.id) }}" class="text-primary"><i class="lni lni-eye"></i></a>
+                                <a href="{{ url_for('admin.user_edit', user_id=user.id) }}" class="mx-3 text-warning"><i class="bx bxs-edit"></i></a>
+                                <a href="#" class="delete-user text-danger" data-id="{{ user.id }}"><i class="bx bxs-trash"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+class UserDeleter {
+    constructor(selector) {
+        this.buttons = document.querySelectorAll(selector);
+        this.init();
+    }
+
+    init() {
+        this.buttons.forEach(button => {
+            button.addEventListener('click', (event) => this.handleDelete(event, button));
+        });
+    }
+
+    async handleDelete(event, button) {
+        event.preventDefault();
+        const userId = button.dataset.id;
+        if (!userId) {
+            alert("Không tìm thấy ID người dùng.");
+            return;
+        }
+
+        if (!confirm('Bạn có chắc chắn muốn xoá người dùng này?')) return;
+
+        try {
+            const response = await fetch(`/admin/user/delete?user_id=${userId}`, {
+
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': this.getCSRFToken()
+                }
+            });
+            console.log(response)
+            const data = await response.json();
+
+            if (data.success) {
+                const row = document.getElementById(`user-${userId}`);
+                if (row) row.remove();
+                location.reload(); // để hiển thị flash
+            } else {
+                alert(data.message || 'Xoá thất bại');
+            }
+        } catch (err) {
+            console.error('Xoá lỗi:', err);
+            alert('Có lỗi xảy ra.');
+        }
+    }
+
+    getCSRFToken() {
+        const token = document.querySelector('meta[name="csrf-token"]');
+        return token ? token.getAttribute('content') : '';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    new UserDeleter('.delete-user');
+});
+</script>
+{% endblock %}

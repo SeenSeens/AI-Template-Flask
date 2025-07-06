@@ -1,0 +1,113 @@
+{% extends 'admin/layout/auth.html' %}
+{% block title %}Đăng ký{% endblock %}
+{% block styles %}{% endblock %}
+{% block content %}
+    <div class="border p-4 rounded">
+    <div class="text-center">
+        <h3 class="">Đăng ký</h3>
+        <p>Đã có tài khoản? <a href="{{ url_for('admin.login') }}">Đăng nhập tại đây</a></p>
+    </div>
+    <div class="d-grid">
+        <a class="btn my-4 shadow-sm btn-white" href="javascript:;">
+            <span class="d-flex justify-content-center align-items-center">
+                <img class="me-2" src="{{ url_for('static', filename='admin/images/icons/search.svg') }}" width="16" alt="Image Description">
+                <span>Đăng ký với Google</span>
+            </span>
+        </a>
+        <a href="javascript:;" class="btn btn-facebook"><i class="bx bxl-facebook"></i>Đăng ký bằng Facebook</a>
+    </div>
+    <div class="login-separater text-center mb-4">
+        <span>HOẶC ĐĂNG KÝ BẰNG EMAIL</span>
+        <hr/>
+    </div>
+    <div class="form-body">
+        <form class="row g-3" method="post" action="{{ url_for('admin.register') }}" enctype="multipart/form-data">
+            {{ form.csrf_token }}
+            <div class="col-12">
+                {{ form.username.label(class="form-label") }}
+                {{ form.username(class="form-control", placeholder="Tên người dùng") }}
+                {% for error in form.username.errors %}
+                    <div class="text-danger">{{ error }}</div>
+                {% endfor %}
+            </div>
+            <div class="col-12">
+                {{ form.email.label(class="form-label") }}
+                {{ form.email(class="form-control", placeholder="example@gmail.com") }}
+                {% for error in form.email.errors %}
+                    <div class="text-danger">{{ error }}</div>
+                {% endfor %}
+            </div>
+            <div class="col-12">
+                {{ form.password.label(class="form-label") }}
+                <div class="input-group" id="show_hide_password">
+                    {{ form.password(class="form-control border-end-0", placeholder="Mật khẩu") }}
+                    <a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
+                </div>
+                {% for error in form.password.errors %}
+                    <div class="text-danger">{{ error }}</div>
+                {% endfor %}
+            </div>
+            <div class="col-12">
+                {{ form.confirm_password.label(class="form-label") }}
+                <div class="input-group" id="show_hide_confirm_password">
+                    {{ form.confirm_password(class="form-control border-end-0", placeholder="Nhập lại mật khẩu") }}
+                    <a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
+                </div>
+                {% for error in form.confirm_password.errors %}
+                    <div class="text-danger">{{ error }}</div>
+                {% endfor %}
+            </div>
+            <div class="col-12">
+                <div class="form-check form-switch">
+                    {{ form.agree(class="form-check-input", id="flexSwitchCheckChecked") }}
+                    <label class="form-check-label" for="flexSwitchCheckChecked">{{ form.agree.label.text }}</label>
+                </div>
+                {% for error in form.agree.errors %}
+                    <div class="text-danger">{{ error }}</div>
+                {% endfor %}
+            </div>
+            <div class="col-12">
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary"><i class='bx bx-user'></i>Đăng ký</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!--end wrapper-->
+
+{% endblock %}
+{% block scripts %}
+<!--Password show & hide js -->
+<script>
+    $(document).ready(function () {
+        $("#show_hide_password a").on('click', function (event) {
+            event.preventDefault();
+            if ($('#show_hide_password input').attr("type") == "text") {
+                $('#show_hide_password input').attr('type', 'password');
+                $('#show_hide_password i').addClass("bx-hide");
+                $('#show_hide_password i').removeClass("bx-show");
+            } else if ($('#show_hide_password input').attr("type") == "password") {
+                $('#show_hide_password input').attr('type', 'text');
+                $('#show_hide_password i').removeClass("bx-hide");
+                $('#show_hide_password i').addClass("bx-show");
+            }
+        });
+    });
+
+    $(document).ready(function () {
+        $("#show_hide_confirm_password a").on('click', function (event) {
+            event.preventDefault();
+            if ($('#show_hide_confirm_password input').attr("type") == "text") {
+                $('#show_hide_confirm_password input').attr('type', 'password');
+                $('#show_hide_confirm_password i').addClass("bx-hide");
+                $('#show_hide_confirm_password i').removeClass("bx-show");
+            } else if ($('#show_hide_confirm_password input').attr("type") == "password") {
+                $('#show_hide_confirm_password input').attr('type', 'text');
+                $('#show_hide_confirm_password i').removeClass("bx-hide");
+                $('#show_hide_confirm_password i').addClass("bx-show");
+            }
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,99 @@
+<div class="sidebar-wrapper" data-simplebar="true">
+	<div class="sidebar-header">
+		<div>
+            <a href="http://127.0.0.1:5000/admin">
+			    <img src="{{ url_for('static', filename='admin/images/logo-img.png' ) }}" class="img-fluid" alt="logo icon">
+            </a>
+		</div>
+		<div class="toggle-icon ms-auto"><i class='bx bx-arrow-to-left'></i></div>
+	</div>
+	<!--navigation-->
+	<ul class="metismenu" id="menu">
+		<li>
+			<a href="javascript:;" class="has-arrow">
+				<div class="parent-icon"><i class='lni lni-dashboard'></i></div>
+				<div class="menu-title">Dashboard</div>
+			</a>
+		</li>
+		<li>
+			<a href="javascript:;" class="has-arrow">
+				<div class="parent-icon"><i class='lni lni-write'></i></div>
+				<div class="menu-title">Bài viết</div>
+			</a>
+			<ul>
+				<li> <a href="{{ url_for('admin.posts', page_type='post') }}"><i class="bx bx-right-arrow-alt"></i>Tất cả bài viết</a></li>
+				<li> <a href="{{ url_for('admin.post_new', page_type='post') }}"><i class="fadeIn animated bx bx-edit-alt"></i>Thêm bài viêt</a> </li>
+				<li> <a href="{{ url_for('admin.terms', page_type='category') }}"><i class="bx bx-right-arrow-alt"></i>Danh mục</a> </li>
+				<li> <a href="{{ url_for('admin.terms', page_type='tag') }}"><i class="lni lni-tag"></i>Thẻ</a> </li>
+			</ul>
+		</li>
+        <li>
+            <a href="javascript:;" class="has-arrow">
+                <div class="parent-icon"><i class="fadeIn animated bx bx-images"></i></div>
+                <div class="menu-title">Media</div>
+            </a>
+            <ul>
+                <li><a href="{{ url_for('admin.library', page_type='library') }}"><i class="lni lni-folder"></i>Thư viện</a></li>
+                <li><a href="{{ url_for('admin.add_new_file', page_type='add_new_file') }}"><i class="fadeIn animated bx bx-image-add"></i>Thêm tệp tin mới</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="javascript:;" class="has-arrow">
+                <div class="parent-icon"><i class="fadeIn animated bx bx-news"></i></div>
+                <div class="menu-title">Trang</div>
+            </a>
+            <ul>
+                <li><a href="{{ url_for('admin.posts', page_type='page') }}"><i class="bx bx-right-arrow-alt"></i>Tất cả các trang</a></li>
+                <li><a href="{{ url_for('admin.post_new', page_type='page') }}"><i class="fadeIn animated bx bx-edit-alt"></i>Thêm trang mới</a></li>
+            </ul>
+        </li>
+		<li>
+			<a href="javascript:;" class="has-arrow">
+				<div class="parent-icon"><i class='lni lni-users'></i></div>
+				<div class="menu-title">Thành viên</div>
+			</a>
+			<ul>
+				<li> <a href="{{ url_for('admin.users') }}"><i class="fadeIn animated bx bx-group"></i>Tất cả người dùng</a> </li>
+				<li> <a href="{{ url_for('admin.user_new') }}"><i class="lni lni-user"></i>Thêm người dùng mới</a> </li>
+				<li> <a href="{{ url_for('admin.profile', user_id=current_user.id) }}"><i class="lni lni-user"></i>Hồ sơ</a> </li>
+			</ul>
+		</li>
+        {#<li>
+			<a href="javascript:;" class="has-arrow">
+				<div class="parent-icon"><i class='lni lni-layout'></i></div>
+				<div class="menu-title">Giao diện</div>
+			</a>
+			<ul>
+				<li> <a href=""><i class="lni lni-layers"></i>Tiện ích</a> </li>
+				<li> <a href=""><i class="lni lni-menu"></i>Menu</a> </li>
+			</ul>
+		</li>#}
+        <li>
+			<a href="javascript:;" class="has-arrow">
+				<div class="parent-icon"><i class='fadeIn animated bx bx-meteor'></i></div>
+				<div class="menu-title">AI</div>
+			</a>
+			<ul>
+                <li><a href="{{ url_for('admin.all_ai_configs') }}"><i class="bx bx-right-arrow-alt"></i>Tất cả mô hình AI</a></li>
+				<li><a href="{{ url_for('admin.ai_configuration') }}"><i class="lni lni-layers"></i>Cấu hình</a> </li>
+				<li><a href="{{ url_for('admin.generate_content') }}"><i class="lni lni-menu"></i>AI content</a></li>
+                <li><a href="{{ url_for('admin.generate_interface') }}"><i class="lni lni-menu"></i>AI giao diện</a></li>
+                <li><a href="{{ url_for('admin.ai_image_processing') }}"><i class="lni lni-menu"></i>AI xử lý ảnh</a></li>
+			</ul>
+		</li>
+		<li>
+			<a href="javascript:;" class="has-arrow">
+				<div class="parent-icon"><i class='lni lni-cogs'></i></div>
+				<div class="menu-title">Cài đặt</div>
+			</a>
+			<ul>
+				<li> <a href="{{ url_for('admin.overview', page_type='overview') }}"><i class="bx bx-right-arrow-alt"></i>Tổng quan</a> </li>
+				<li> <a href="{{ url_for('admin.write', page_type='write') }}"><i class="bx bx-right-arrow-alt"></i>Viết</a> </li>
+				<li> <a href="{{ url_for('admin.read', page_type='read') }}"><i class="bx bx-right-arrow-alt"></i>Đọc</a> </li>
+				<li> <a href="{{ url_for('admin.comment', page_type='comment') }}"><i class="bx bx-right-arrow-alt"></i>Bình luận</a> </li>
+				<li> <a href="{{ url_for('admin.media', page_type='media') }}"><i class="bx bx-right-arrow-alt"></i>Media</a> </li>
+			</ul>
+		</li>
+	</ul>
+	<!--end navigation-->
+</div>

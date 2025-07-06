@@ -1,0 +1,110 @@
+{% extends 'admin/layout/base.html' %}
+{% block title %}{{ page_title }}{% endblock %}
+{% block content %}
+{% include 'admin/components/breadcrumb.html' %}
+
+<div class="container-fluid">
+    <form class="row" action="{{ url_for('admin.post_edit', page_type=page_type, post_id=post.id) }}" method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="col-md-8 col-lg-8">
+            <div class="card">
+                <div class="card-header fw-bold">{{ form.title.label(class="form-label mb-0", for="title") }}</div>
+                <div class="card-body">
+                    {{ form.title(class='form-control', placeholder="Thêm tiêu đề") }}
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header fw-bold">{{ form.slug.label(class="form-label mb-0", for="slug") }}</div>
+                <div class="card-body">
+                    {{ form.slug(class_='form-control', placeholder="Thêm đường dẫn") }}
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header fw-bold">{{ form.content.label(class="form-label mb-0", for="content") }}</div>
+                <div class="card-body">
+                    {{ form.content(class_='form-control', rows=10, placeholder="Thêm nội dung") }}
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header fw-bold">{{ form.excerpt.label(class="form-label mb-0", for="excerpt") }}</div>
+                <div class="card-body">
+                    {{ form.excerpt(class_='form-control', rows=10, placeholder="Thêm tóm tắt") }}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-lg-4">
+            <div class="card">
+                <div class="card-header fw-bold">Xuất bản</div>
+                <div class="card-body">
+                    <div class="d-flex flex-row justify-content-between mb-2">
+                        {{ form.submit_draft(class='btn btn-sm btn-outline-primary') }}
+                        <button class="btn btn-sm btn-outline-primary">Xem trước</button>
+                    </div>
+                    <ul class="list-inline">
+                        <li class="list-inline-item mb-2">
+                            Trạng thái:
+                            <strong></strong>
+                            <a href=""> Chỉnh sửa</a>
+                        </li>
+                        <li class="list-inline-item mb-2">
+                            Hiển thị:
+                            <strong>Công khai</strong>
+                            <a href=""> Chỉnh sửa</a>
+                        </li>
+                        <li class="list-inline-item mb-2">
+                            Xuất bản
+                            <strong>Ngay lập tức</strong>
+                            <a href=""> Chỉnh sửa</a>
+                        </li>
+                    </ul>
+                    <button type="submit" class="btn btn-sm btn-primary float-end">{{ button_edit }}</button>
+                </div>
+            </div>
+            {% if page_type == 'post' %}
+            <div class="card">
+                <div class="card-header fw-bold">Danh mục</div>
+                <div class="card-body">
+                    {{ form_term.category(class='form-select') }}
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header fw-bold">Thẻ</div>
+                <div class="card-body">
+                    {{ form_term.tag(class='form-select') }}
+                </div>
+            </div>
+            {% endif %}
+            <div class="card">
+                {#{{ form_term.thumbnail(class='form-control') }}#}
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+{% block scripts %}
+    <script>
+        function ChangeToSlug(text) {
+            let slug = text.toLowerCase();
+
+            slug = slug.replace(/á|à|ả|ạ|ã|ă|ắ|ằ|ẳ|ẵ|ặ|â|ấ|ầ|ẩ|ẫ|ậ/gi, 'a');
+            slug = slug.replace(/é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ/gi, 'e');
+            slug = slug.replace(/i|í|ì|ỉ|ĩ|ị/gi, 'i');
+            slug = slug.replace(/ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ/gi, 'o');
+            slug = slug.replace(/ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự/gi, 'u');
+            slug = slug.replace(/ý|ỳ|ỷ|ỹ|ỵ/gi, 'y');
+            slug = slug.replace(/đ/gi, 'd');
+
+            slug = slug.replace(/[^a-z0-9\s-]/g, '');      // Xóa ký tự đặc biệt
+            slug = slug.trim().replace(/\s+/g, '-');       // Đổi khoảng trắng thành dấu gạch ngang
+            slug = slug.replace(/-+/g, '-');               // Gộp dấu gạch ngang
+
+            return slug;
+        }
+
+        document.getElementById('title').addEventListener('input', function () {
+            const title = this.value;
+            const slug = ChangeToSlug(title);
+            document.getElementById('slug').value = slug;
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,2 @@
+class PostTermService:
+    pass

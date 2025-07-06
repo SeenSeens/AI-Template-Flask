@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}</title>
+    <!--favicon-->
+	<link rel="icon" href="{{ url_for('static', filename='admin/images/favicon-32x32.png') }}" type="image/png" />
+	<!--plugins-->
+	<link href="{{ url_for('static', filename='admin/plugins/simplebar/css/simplebar.css') }}" rel="stylesheet" />
+	<link href="{{ url_for('static', filename='admin/plugins/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet" />
+	<link href="{{ url_for('static', filename='admin/plugins/metismenu/css/metisMenu.min.css') }}" rel="stylesheet" />
+	<!-- loader-->
+	<link href="{{ url_for('static', filename='admin/css/pace.min.css') }}" rel="stylesheet" />
+	<script src="{{ url_for('static', filename='admin/js/pace.min.js') }}"></script>
+	<!-- Bootstrap CSS -->
+	<link href="{{ url_for('static', filename='admin/css/bootstrap.min.css') }}" rel="stylesheet">
+	<link href="{{ url_for('static', filename='admin/css/app.css') }}" rel="stylesheet">
+	<link href="{{ url_for('static', filename='admin/css/icons.css') }}" rel="stylesheet">
+    {% block styles %}{% endblock %}
+</head>
+<body>
+<!--wrapper-->
+<div class="wrapper">
+    <div class="d-flex align-items-center justify-content-center my-5 my-lg-0">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-2">
+                <div class="col mx-auto">
+                    <div class="my-4 text-center">
+                        <img src="{{ url_for('static', filename='admin/images/logo-img.png') }}" width="180" alt="" />
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            {% block content %}{% endblock %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end row-->
+        </div>
+    </div>
+</div>
+<!--end wrapper-->
+<!-- Bootstrap JS -->
+<script src="{{ url_for('static', filename='admin/js/bootstrap.bundle.min.js') }}"></script>
+<!--plugins-->
+<script src="{{ url_for('static', filename='admin/js/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='admin/plugins/simplebar/js/simplebar.min.js') }}"></script>
+<script src="{{ url_for('static', filename='admin/plugins/metismenu/js/metisMenu.min.js') }}"></script>
+<script src="{{ url_for('static', filename='admin/plugins/perfect-scrollbar/js/perfect-scrollbar.js') }}"></script>
+<!--app JS-->
+<script src="{{ url_for('static', filename='admin/js/app.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>
