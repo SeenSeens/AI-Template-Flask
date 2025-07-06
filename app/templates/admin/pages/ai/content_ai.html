@@ -1,0 +1,118 @@
+{% extends 'admin/layout/base.html' %}
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+{% include 'admin/components/breadcrumb.html' %}
+
+<div class="container-fluid">
+    <form method="POST" action="" class="p-4 border rounded shadow-sm bg-white">
+        <h3 class="mb-4">⚙️ Cấu hình AI cho viết nội dung</h3>
+        <!-- Preset lựa chọn hoặc tạo mới -->
+        <div class="mb-3">
+            <label class="form-label">Chọn preset nội dung:</label>
+            <select name="preset_id" class="form-select">
+                {% for preset in presets %}
+                <option value="{{ preset.id }}">{{ preset.use_case }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Hoặc tạo mới preset:</label>
+            <input type="text" name="use_case" class="form-control" placeholder="Ví dụ: blog-writing, seo-copy, email-campaign">
+        </div>
+        <!-- Tham số model -->
+        <div class="row">
+            <div class="col-md-4">
+                <label class="form-label">Temperature:</label>
+                <input type="number" step="0.1" name="temperature" value="0.7" class="form-control" min="0" max="1">
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Top P:</label>
+                <input type="number" step="0.1" name="top_p" value="0.9" class="form-control" min="0" max="1">
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Max Tokens:</label>
+                <input type="number" name="max_tokens" value="1024" class="form-control">
+            </div>
+        </div>
+        <div class="mt-3 mb-3">
+            <label class="form-label">Frequency Penalty:</label>
+            <input type="number" step="0.1" name="frequency_penalty" value="0.2" class="form-control" min="0" max="2">
+        </div>
+        <!-- Tính năng -->
+        <fieldset class="border p-3 mb-3">
+            <legend class="w-auto px-2">🧠 Tính năng hỗ trợ</legend>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="autocomplete" id="autocomplete" checked>
+                <label class="form-check-label" for="autocomplete">Tự động hoàn thành nội dung</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="summarize" id="summarize">
+                <label class="form-check-label" for="summarize">Tóm tắt nội dung</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="translate" id="translate">
+                <label class="form-check-label" for="translate">Dịch nội dung</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="multi_chat" id="multi_chat">
+                <label class="form-check-label" for="multi_chat">Chat đa lượt (multi-turn)</label>
+            </div>
+            <div class="form-check mt-2">
+                <input class="form-check-input" type="checkbox" name="is_default" id="is_default">
+                <label class="form-check-label" for="is_default">Đặt làm cấu hình mặc định</label>
+            </div>
+        </fieldset>
+        <!-- JSON mở rộng -->
+        <div class="mb-3">
+            <label class="form-label">🎯 Thông số bổ sung (JSON):</label>
+            <textarea name="features" rows="5" class="form-control" placeholder='{
+                "tone": "friendly",
+                "language": "vi",
+                "style": "blog",
+                "output_format": "html"
+                }'></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">💾 Lưu cấu hình</button>
+    </form>
+
+    <div class="mt-5">
+        <h2>📝 Kiểm tra tạo nội dung bằng AI (Gemini)</h2>
+        <form id="ai-content-form" method="post">
+            <div class="mb-3">
+                <label for="prompt" class="form-label">Chủ đề / Yêu cầu</label>
+                <textarea class="form-control" id="prompt" name="prompt" rows="4" placeholder="VD: Viết một bài blog giới thiệu về AI trong giáo dục..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">⚡ Tạo nội dung</button>
+        </form>
+
+        <div class="mt-4" id="result-box" style="display:none;">
+            <h5>Kết quả:</h5>
+            <div id="result-content" class="border rounded p-3 bg-light"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById("ai-content-form").addEventListener("submit", async function(e) {
+    e.preventDefault();
+    const prompt = document.getElementById("prompt").value;
+    const resultBox = document.getElementById("result-box");
+    const resultContent = document.getElementById("result-content");
+
+    resultBox.style.display = "none";
+    resultContent.innerHTML = "Đang tạo nội dung...";
+
+    try {
+        const res = await axios.post("/admin/generate-content", { prompt });
+        resultBox.style.display = "block";
+        resultContent.innerHTML = res.data.content || "Không có nội dung trả về.";
+    } catch (err) {
+        resultContent.innerHTML = err.response?.data?.error || "Đã xảy ra lỗi khi sinh nội dung.";
+        resultBox.style.display = "block";
+    }
+});
+</script>
+{% endblock %}

@@ -1,4 +1,4 @@
-from app import AiConfig, db
+from app import db, AiConfig
 
 
 class AiConfigRepository:

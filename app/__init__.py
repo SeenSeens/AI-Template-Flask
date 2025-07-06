@@ -26,7 +26,14 @@ login_manager.login_view = "admin.login"  # Redirects unauthorized users to the 
 csrf = CSRFProtect(app)
 
 # Configuration for media files
-app.config['MEDIA_FOLDER'] = 'media'
+app.config['MEDIA_FOLDER'] = os.path.join( os.path.dirname( os.path.abspath( __file__ ) ), '..', 'uploads' )
+app.config['MEDIA_URL'] = '/uploads/'
+
+# Đảm bảo thư mục tồn tại
+if not os.path.exists(app.config['MEDIA_FOLDER'] ):
+    os.makedirs(app.config['MEDIA_FOLDER'] )
+
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'pdf', 'txt', 'zip'}
 
 # Configures the logging
 def configure_logging(app):
@@ -39,8 +46,8 @@ def configure_logging(app):
 
 configure_logging(app)
 
-from app.routes.main import main as main_blueprint
-app.register_blueprint(main_blueprint)
+from app.routes.main import main
+app.register_blueprint(main)
 
 from app.routes.admin import admin_bp
 app.register_blueprint(admin_bp)
@@ -48,8 +55,13 @@ app.register_blueprint(admin_bp)
 from app.routes.api import api_bp
 app.register_blueprint(api_bp)
 
-# debug
-app.debug = True
-toolbar = DebugToolbarExtension(app)
+# Serve uploads files
+@app.route('/media/<path:filename>')
+def media(filename):
+    return send_from_directory(app.config['MEDIA_FOLDER'], filename)
 
-app.config['TEMPLATES_AUTO_RELOAD'] = True
+# debug
+# app.debug = True
+# toolbar = DebugToolbarExtension(app)
+#
+# app.config['TEMPLATES_AUTO_RELOAD'] = True

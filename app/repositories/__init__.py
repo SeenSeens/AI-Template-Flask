@@ -5,4 +5,4 @@ from .term_repository import TermRepository
 from .term_taxonomy_repository import TermTaxonomyRepository
 from .post_repository import PostsRepository
 from .post_term_repository import PostTermRepository
-from .ai_repository import AiRepository
+from .ai_config_repository import AiConfigRepository

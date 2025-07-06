@@ -76,6 +76,22 @@ PAGE_CONFIG = {
             'page_title': 'Cấu hình AI',
             'page_template': 'admin/pages/ai/ai_configuration.html',
         },
+        'all_ai': {
+            'page_title': 'Tất cả AI',
+            'page_template': 'admin/pages/ai/all_ai.html',
+        },
+        'content_ai': {
+            'page_title': 'Cấu hình AI tạo nội dung',
+            'page_template': 'admin/pages/ai/content_ai.html',
+        },
+        'design_ai': {
+            'page_title': 'Cấu hình AI thiết kế',
+            'page_template': 'admin/pages/ai/design_ai.html',
+        },
+        'image_processing_ai': {
+            'page_title': 'Cấu hình AI xử lý hình ảnh',
+            'page_template': 'admin/pages/ai/image_processing_ai.html',
+        }
     },
     'overview': {
         'page_title': 'Tổng quan',

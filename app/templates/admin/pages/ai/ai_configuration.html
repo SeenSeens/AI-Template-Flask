@@ -1,103 +1,30 @@
 {% extends 'admin/layout/base.html' %}
-{% block title %}Cấu hình AI{% endblock %}
+{% block title %}{{ page_title }}{% endblock %}
 {% block content %}
-<!--breadcrumb-->
-<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-    <div class="ps-3">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb mb-0 p-0">
-                <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
-                </li>
-                <li class="breadcrumb-item active" aria-current="page">Cấu hình AI</li>
-            </ol>
-        </nav>
-    </div>
-</div>
-<!--end breadcrumb-->
-<h6 class="mb-0 ps-3 text-uppercase">Cấu hình AI</h6>
-<hr/>
+{% include 'admin/components/breadcrumb.html' %}
 <div class="container-fluid">
     <form class="row gy-3" method="post" action="{{ url_for('admin.ai_configuration') }}">
-         {{ form_helper.csrf_token }}
+         {{ form.csrf_token }}
         <!-- API Token -->
         <div class="col-12">
-            {{ form_helper.token.label(class="form-label") }}
-            {{ form_helper.token(class="form-control", placeholder="Nhập token API…") }}
+            {{ form.token.label(class="form-label") }}
+            {{ form.token(class="form-control", placeholder="Nhập token API…") }}
         </div>
         <!-- Provider -->
         <div class="col-md-6">
-            {{ form_helper.provider.label(class="form-label") }}
-            {{ form_helper.provider(class="form-select") }}
+            {{ form.provider.label(class="form-label") }}
+            {{ form.provider(class="form-select") }}
         </div>
         <!-- Task (chỉ hiển thị khi Hugging Face) -->
         <div class="col-md-6" id="task-wrapper" style="display:none">
-            {{ form_helper.task_type.label(class="form-label") }}
-            {{ form_helper.task_type(class="form-select") }}
+            {{ form.task_type.label(class="form-label") }}
+            {{ form.task_type(class="form-select") }}
         </div>
-
         <!-- Model -->
         <div class="col-md-6">
-            {{ form_helper.model_name.label(class="form-label") }}
-            {{ form_helper.model_name(class="form-select") }}
+            {{ form.model_name.label(class="form-label") }}
+            {{ form.model_name(class="form-select") }}
         </div>
-        <!-- Parameters -->
-        <div class="col-md-3">
-            {{ form_helper.temperature.label(class="form-label") }}
-            {{ form_helper.temperature(class="form-control", step="0.1", min="0", max="1", type="number") }}
-            {% if form_helper.temperature.errors %}
-                <div class="text-danger">
-                    {{ form_helper.temperature.errors[0] }}
-                </div>
-            {% endif %}
-        </div>
-        <div class="col-md-3">
-            {{ form_helper.max_tokens.label(class="form-label") }}
-            {{ form_helper.max_tokens(class="form-control", type="number") }}
-            {% if form_helper.max_tokens.errors %}
-                <div class="text-danger">
-                    {{ form_helper.max_tokens.errors[0] }}
-                </div>
-            {% endif %}
-        </div>
-        <div class="col-md-3">
-            {{ form_helper.top_p.label(class="form-label") }}
-            {{ form_helper.top_p(class="form-control", step="0.1", min="0", max="1", type="number") }}
-            {% if form_helper.top_p.errors %}
-                <div class="text-danger">
-                    {{ form_helper.top_p.errors[0] }}
-                </div>
-            {% endif %}
-        </div>
-        <div class="col-md-3">
-            {{ form_helper.frequency_penalty.label(class="form-label") }}
-            {{ form_helper.frequency_penalty(class="form-control", step="0.1", min="0", max="2", type="number") }}
-            {% if form_helper.frequency_penalty.errors %}
-                <div class="text-danger">
-                    {{ form_helper.frequency_penalty.errors[0] }}
-                </div>
-            {% endif %}
-        </div>
-        <!-- Features -->
-        <div class="col-md-12">
-            <label class="form-label">🛠️ Tính năng:</label>
-            <div class="form-check form-check-inline">
-                {{ form_helper.autocomplete(class="form-check-input", id="autocomplete") }}
-                {{ form_helper.autocomplete.label(class="form-check-label", for="autocomplete") }}
-            </div>
-            <div class="form-check form-check-inline">
-                {{ form_helper.summarize(class="form-check-input", id="summarize") }}
-                {{ form_helper.summarize.label(class="form-check-label", for="summarize") }}
-            </div>
-            <div class="form-check form-check-inline">
-                {{ form_helper.translate(class="form-check-input", id="translate") }}
-                {{ form_helper.translate.label(class="form-check-label", for="translate") }}
-            </div>
-            <div class="form-check form-check-inline">
-                {{ form_helper.multi_chat(class="form-check-input", id="multi_chat") }}
-                {{ form_helper.multi_chat.label(class="form-check-label", for="multi_chat") }}
-            </div>
-        </div>
-
         <div class="col-12 text-end">
             <button type="submit" class="btn btn-sm btn-primary">💾 Lưu cấu hình</button>
             <button type="button" id="btn-test-connection" class="btn btn-sm btn-success" data-action="test">🧪 Kiểm tra kết nối</button>
@@ -106,74 +33,83 @@
 </div>
 {% endblock %}
 
-{% block js %}
-
+{% block scripts %}
 <script>
-const providerSelect = document.getElementById("provider");
-const taskWrapper = document.getElementById("task-wrapper");
+class AiConfigurationManager {
+    constructor() {
+        this.tokenInput = document.getElementById("token");
+        this.providerSelect = document.getElementById("provider");
+        this.taskSelect = document.getElementById("task_type");
+        this.modelSelect = document.getElementById("model_name");
+        this.taskWrapper = document.getElementById("task-wrapper");
+        this.testButton = document.getElementById("btn-test-connection");
 
-function toggleTaskSelect() {
-    if (providerSelect.value === "huggingface") {
-        taskWrapper.style.display = "block";
-    } else {
-        taskWrapper.style.display = "none";
+        this.init();
     }
-}
-providerSelect.addEventListener("change", toggleTaskSelect);
-document.addEventListener("DOMContentLoaded", toggleTaskSelect);
 
-// Load model
-document.addEventListener("DOMContentLoaded", function () {
-    const tokenInput = document.getElementById("token");
-    const providerSelect = document.getElementById("provider");
-    const modelSelect = document.getElementById("model_name");
-    const taskSelect = document.getElementById("task_type");
+    init() {
+        this.toggleTaskSelect();
 
-    async function fetchModels() {
-        const token = tokenInput.value.trim();
-        const provider = providerSelect.value.trim();
-        const task = taskSelect?.value?.trim();
+        // Gán sự kiện
+        this.providerSelect.addEventListener("change", () => {
+            this.toggleTaskSelect();
+            this.fetchModels();
+        });
 
-        if (!token || !provider) return;
+        this.tokenInput.addEventListener("blur", () => this.fetchModels());
+        this.taskSelect?.addEventListener("change", () => this.fetchModels());
+        this.testButton.addEventListener("click", () => this.testConnection());
+    }
 
-        const payload = {
-            token: token,
-            provider: provider
-        };
+    toggleTaskSelect() {
+        const provider = this.providerSelect.value;
+        if (provider === "huggingface") {
+            this.taskWrapper.style.display = "block";
+        } else {
+            this.taskWrapper.style.display = "none";
+        }
+    }
 
-        if (provider === 'huggingface' && task) {
+    async fetchModels() {
+        const token = this.tokenInput.value.trim();
+        const provider = this.providerSelect.value.trim();
+        const task = this.taskSelect?.value?.trim();
+
+        if (!token || !provider) {
+            console.warn("Thiếu token hoặc provider");
+            return;
+        }
+
+        const payload = { token, provider };
+        if (provider === "huggingface" && task) {
             payload.task = task;
         }
 
         try {
-            const response = await axios.post("/admin/load-models", payload);
+            const response = await axios.post("/admin/load-models", payload, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    "X-CSRFToken": this.getCsrfToken(),
+                }
+            });
+
             const models = response.data.models || [];
-            modelSelect.innerHTML = "";
+            this.modelSelect.innerHTML = "";
             models.forEach((model) => {
                 const option = document.createElement("option");
                 option.value = model.id;
                 option.textContent = model.label;
-                modelSelect.appendChild(option);
+                this.modelSelect.appendChild(option);
             });
         } catch (error) {
-            modelSelect.innerHTML = "";
-            alert(error.response?.data?.error || "Không thể load models. Kiểm tra API key và provider.");
+            console.error("❌ Lỗi axios:", error);
+            alert(error.response?.data?.error || "Không thể load models. Vui lòng kiểm tra lại.");
         }
     }
-    tokenInput.addEventListener("blur", fetchModels); // hoặc change
-    providerSelect.addEventListener("change", fetchModels);
-});
 
-// Test kết nối
-document.addEventListener("DOMContentLoaded", function () {
-    const testBtn = document.getElementById("btn-test-connection");
-
-    const tokenInput = document.getElementById("token");
-    const providerSelect = document.getElementById('provider');
-
-    testBtn.addEventListener("click", async function () {
-        const apiKey = tokenInput.value.trim();
-        const provider = providerSelect.value;
+    async testConnection() {
+        const apiKey = this.tokenInput.value.trim();
+        const provider = this.providerSelect.value.trim();
 
         if (!apiKey || !provider) {
             alert("Vui lòng nhập API key và chọn provider.");
@@ -181,18 +117,31 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         try {
-            const res = await axios.post("/admin/test-connection", {
+            const response = await axios.post("/admin/test-connection", {
                 api_key: apiKey,
                 provider: provider
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': this.getCsrfToken(),
+                }
             });
-            alert(res.data.message || "Kết nối thành công!");
-        } catch (err) {
-            alert(err.response?.data?.error || "Kết nối thất bại. Vui lòng kiểm tra lại.");
+
+            alert(response.data.message || "Kết nối thành công!");
+        } catch (error) {
+            console.error("❌ Lỗi kiểm tra kết nối:", error);
+            alert(error.response?.data?.error || "Kết nối thất bại. Vui lòng kiểm tra lại.");
         }
-    });
+    }
+
+    getCsrfToken() {
+        return document.querySelector('meta[name="csrf-token"]')?.getAttribute("content") || "";
+    }
+
+}
+document.addEventListener("DOMContentLoaded", function () {
+    new AiConfigurationManager();
 });
+
 </script>
-
-
-
 {% endblock %}

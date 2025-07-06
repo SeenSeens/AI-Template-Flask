@@ -1,0 +1,42 @@
+{% extends 'admin/layout/base.html' %}
+{% block title %}{{ page_title }}{% endblock %}
+{% block content %}
+{% include 'admin/components/breadcrumb.html' %}
+    <div class="container">
+    <h4 class="mb-4">📋 Danh sách các cấu hình AI</h4>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Provider</th>
+                <th>Model</th>
+                <th>Created</th>
+                <th>Updated</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ai in all_ai %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ ai.provider }}</td>
+                    <td>{{ ai.model_name }}</td>
+                    <td>{{ ai.created_at or 'N/A' }}</td>
+                    <td>{{ ai.updated_at or 'N/A' }}</td>
+                    <td>
+                        <div class="d-flex order-actions">
+                            <a href="" class="text-primary"><i class="lni lni-eye"></i></a>
+                            <a href="" class="mx-2 text-warning"><i class="bx bxs-edit"></i></a>
+                            <a href="#" class="delete-ai text-danger" data-id="{{ ai.id }}"><i class="bx bxs-trash"></i></a>
+                        </div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7" class="text-center">Chưa có cấu hình nào</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
