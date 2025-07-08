@@ -42,7 +42,7 @@ class AuthController:
                 flash("Đăng nhập thành công", "success")
                 return redirect(url_for('admin.dashboard'))
             else:
-                flash("Incorrect account or password.", "danger")
+                flash("Tài khoản hoặc mật khẩu không đúng.", "danger")
         return render_template('admin/pages/auth/login.html', form=form)
 
     def forgot_password(self):

@@ -5,4 +5,4 @@ from .term_service import TermService
 from .term_taxonomy_service import TermTaxonomyService
 from .post_service import PostsService
 from .post_term_service import PostTermService
-from .ai_config_service import AiConfigService
+from .ai_config_service import AIConfigService

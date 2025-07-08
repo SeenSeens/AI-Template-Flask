@@ -1,11 +1,17 @@
 from flask import render_template, request, jsonify, flash, redirect, url_for
 from flask_login import current_user
 from app.helpers.ai_configuration_helper import AIConfigurationHelper
+from app.helpers.ai_preset_form_helper import AIPresetFormHelper
 from app.helpers.page_config_helper import get_page_config
-from app.repositories import AiConfigRepository
-from app.services.ai_config_service import AiConfigService
+from app.repositories import AIConfigRepository, AIPresetFeatureRepository
+from app.repositories.ai_preset_repository import AIPresetRepository
+from app.services.ai_config_service import AIConfigService
+from app.services.ai_preset_feature_service import AIPresetFeatureService
+from app.services.ai_preset_service import AIPresetService
 
-service = AiConfigService(AiConfigRepository())
+service = AIConfigService(AIConfigRepository())
+servicePreset = AIPresetService(AIPresetRepository())
+servicePresetFeature = AIPresetFeatureService(AIPresetFeatureRepository())
 
 class AIConfigController:
 
@@ -76,7 +82,7 @@ class AIConfigController:
                 'api_key': form.token.data,
             }
             service.create_ai_config(**ai_config_data)
-            flash('AI configuration saved successfully.', 'success')
+            flash('Cấu hình AI đã được lưu thành công.', 'success')
             return redirect(url_for('admin.ai_configuration'))
         return render_template(config['page_template'], **config, form=form, page_type=page_type)
 
@@ -87,19 +93,31 @@ class AIConfigController:
 
     def config_content_ai(self, page_type, sub_type):
         config = get_page_config(page_type, sub_type)
-        if request.method == 'POST':
-            data = request.get_json()
-            prompt = data.get('prompt')
-            if not prompt:
-                return jsonify({'error': 'Vui lòng nhập yêu cầu nội dung'}), 400
+        form = AIPresetFormHelper()
+        if form.validate_on_submit():
+            ai_preset_data = {
+                'use_case': form.use_case.data,
+                'type': form.type.data,
+                'temperature': form.temperature.data,
+                'top_p': form.top_p.data,
+                'max_tokens': form.max_tokens.data,
+                'frequency_penalty': form.frequency_penalty.data,
+            }
+            preset = servicePreset.create_ai_preset(**ai_preset_data)
+            ai_preset_feature_data = {
+                'preset_id': preset.id,
+                'is_default': form.is_default.data,
+                'autocomplete': form.autocomplete.data,
+                'summarize': form.summarize.data,
+                'translate': form.translate.data,
+                'multi_chat': form.multi_chat.data,
+                'features': form.features.data if hasattr(form, 'features') else [],
+            }
 
-            try:
-                # Gọi service sinh content với Gemini
-                content = service.generate_content_with_gemini(prompt, current_user.id)
-                return jsonify({'content': content})
-            except Exception as e:
-                return jsonify({'error': str(e)}), 500
-        return render_template(config['page_template'], **config, page_type=page_type)
+            servicePresetFeature.create_ai_preset_feature(**ai_preset_feature_data)
+            flash('Cấu hình AI đã được lưu thành công.', 'success')
+            # return redirect(url_for('admin.ai_configuration'))
+        return render_template(config['page_template'], **config, page_type=page_type, form=form)
 
     def config_design_ai(self, page_type, sub_type):
         config = get_page_config(page_type, sub_type)

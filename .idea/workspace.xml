@@ -5,10 +5,38 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bd8df8fa-d609-4de0-bbc3-ad54a90dbe92" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/app/helpers/ai_preset_form_helper.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/repositories/ai_preset_feature_repository.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/repositories/ai_preset_repository.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/services/ai_preset_feature_service.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/services/ai_preset_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/7cbe8f07-e426-4c1c-be09-4c809fade51e.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/7cbe8f07-e426-4c1c-be09-4c809fade51e.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/wiintek.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/wiintek.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/helpers/ai_configuration_helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/helpers/ai_configuration_helper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/repositories/ai_repository.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/repositories/ai_repository.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/ai_config_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/ai_config_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/auth_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/auth_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/helpers/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/helpers/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/ai_config_presets.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/ai_config_presets.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/ai_configs.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/ai_configs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/ai_preset_features.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/ai_preset_features.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/ai_presets.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/ai_presets.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/repositories/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/repositories/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/repositories/ai_config_repository.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/repositories/ai_config_repository.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/admin/ai_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/admin/ai_config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/admin/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/admin/auth.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/ai_config_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/ai_config_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/auth_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/auth_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/admin/layout/auth.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/admin/layout/auth.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/admin/layout/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/admin/layout/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/admin/pages/ai/ai_configuration.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/admin/pages/ai/ai_configuration.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/admin/pages/ai/content_ai.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/admin/pages/ai/content_ai.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/README" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/alembic.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/env.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/script.py.mako" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/versions/fdad66d37bac_initial_migration.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,40 +56,60 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;history&quot;: [
+    {
+      &quot;state&quot;: &quot;OPEN&quot;
+    }
+  ],
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:SeenSeens/AI-Template-Flask.git&quot;,
+    &quot;accountId&quot;: &quot;d729cff4-88ac-44b5-938b-2d4c11d285ad&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
   <component name="ProjectId" id="2xyo09D4eXJyAXpOYdVaB6ObOJX" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Python.application.executor": "Run",
-    "Python.auth_controller.executor": "Run",
-    "Python.post_repository.executor": "Debug",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/tuanpho/Documents/Python/wiintek/app/templates/admin/pages/ai",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.application.executor&quot;: &quot;Run&quot;,
+    &quot;Python.auth_controller.executor&quot;: &quot;Run&quot;,
+    &quot;Python.post_repository.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/tuanpho/Documents/Python/wiintek/app/templates/admin/pages/ai&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mariadb"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mariadb&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/app/templates/admin/pages/ai" />
@@ -204,12 +252,25 @@
       <workItem from="1750181828376" duration="4164000" />
       <workItem from="1751609815879" duration="12958000" />
       <workItem from="1751638600143" duration="11177000" />
-      <workItem from="1751799524952" duration="16602000" />
+      <workItem from="1751799524952" duration="16960000" />
+      <workItem from="1751871099908" duration="4443000" />
+      <workItem from="1751955170811" duration="11707000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/wiintek$auth_controller.coverage" NAME="auth_controller Coverage Results" MODIFIED="1749114334547" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app/controllers" />

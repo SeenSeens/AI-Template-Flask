@@ -13,7 +13,7 @@ class AuthService:
 
     def register_user(self, username, email, password, confirm_password):
         if self.authRepository.get_by_username(username):
-            return False, "Username already taken!"
+            return False, "Tên người dùng đã có người sử dụng!"
 
         if password.strip() != confirm_password.strip():
             return False, "Mật khẩu không khớp"

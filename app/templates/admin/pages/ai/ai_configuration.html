@@ -76,7 +76,14 @@ class AiConfigurationManager {
         const task = this.taskSelect?.value?.trim();
 
         if (!token || !provider) {
-            console.warn("Thiếu token hoặc provider");
+            Toastify({
+                text: "Thiếu token hoặc provider",
+                duration: 4000,
+                gravity: "top",
+                position: "right",
+                backgroundColor: "linear-gradient(to right, #ff5f6d, #ffc371)",
+                stopOnFocus: true
+            }).showToast();
             return;
         }
 
@@ -102,8 +109,14 @@ class AiConfigurationManager {
                 this.modelSelect.appendChild(option);
             });
         } catch (error) {
-            console.error("❌ Lỗi axios:", error);
-            alert(error.response?.data?.error || "Không thể load models. Vui lòng kiểm tra lại.");
+            Toastify({
+                text: error.response?.data?.error || "Không thể load models. Vui lòng kiểm tra lại.",
+                duration: 4000,
+                gravity: "top",
+                position: "right",
+                backgroundColor: "linear-gradient(to right, #ff5f6d, #ffc371)",
+                stopOnFocus: true
+            }).showToast();
         }
     }
 
@@ -112,7 +125,14 @@ class AiConfigurationManager {
         const provider = this.providerSelect.value.trim();
 
         if (!apiKey || !provider) {
-            alert("Vui lòng nhập API key và chọn provider.");
+            Toastify({
+                text: "Vui lòng nhập API key và chọn provider.",
+                duration: 4000,
+                gravity: "top",
+                position: "right",
+                backgroundColor: "linear-gradient(to right, #ff5f6d, #ffc371)",
+                stopOnFocus: true
+            }).showToast();
             return;
         }
 
@@ -126,11 +146,24 @@ class AiConfigurationManager {
                     'X-CSRFToken': this.getCsrfToken(),
                 }
             });
-
-            alert(response.data.message || "Kết nối thành công!");
+            Toastify({
+                text: response.data.message || "✅ Kết nối thành công!",
+                duration: 4000,
+                gravity: "top",
+                position: "right",
+                backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+                stopOnFocus: true
+            }).showToast();
         } catch (error) {
             console.error("❌ Lỗi kiểm tra kết nối:", error);
-            alert(error.response?.data?.error || "Kết nối thất bại. Vui lòng kiểm tra lại.");
+            Toastify({
+                text: error.response?.data?.error || "Kết nối thất bại. Vui lòng kiểm tra lại.",
+                duration: 4000,
+                gravity: "top",
+                position: "right",
+                backgroundColor: "linear-gradient(to right, #ff5f6d, #ffc371)", // đỏ thất bại
+                stopOnFocus: true
+            }).showToast();
         }
     }
 

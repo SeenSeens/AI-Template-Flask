@@ -5,11 +5,11 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import PromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
 from openai import OpenAI
-from app.repositories.ai_config_repository import AiConfigRepository
+from app.repositories.ai_config_repository import AIConfigRepository
 
 
-class AiConfigService:
-    def __init__(self, repository: AiConfigRepository):
+class AIConfigService:
+    def __init__(self, repository: AIConfigRepository):
         self.repository = repository
 
     # langchain_loader.py

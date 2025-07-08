@@ -5,75 +5,108 @@
 {% include 'admin/components/breadcrumb.html' %}
 
 <div class="container-fluid">
-    <form method="POST" action="" class="p-4 border rounded shadow-sm bg-white">
+    <form method="POST" action="{{ url_for('admin.config_content_ai') }}">
+        {{ form.hidden_tag() }}
         <h3 class="mb-4">⚙️ Cấu hình AI cho viết nội dung</h3>
-        <!-- Preset lựa chọn hoặc tạo mới -->
-        <div class="mb-3">
-            <label class="form-label">Chọn preset nội dung:</label>
-            <select name="preset_id" class="form-select">
-                {% for preset in presets %}
-                <option value="{{ preset.id }}">{{ preset.use_case }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Hoặc tạo mới preset:</label>
-            <input type="text" name="use_case" class="form-control" placeholder="Ví dụ: blog-writing, seo-copy, email-campaign">
+        <div class="row">
+            <div class="mb-3 col-12 col-md-6">
+                {{ form.use_case.label(class="form-label", for="use_case") }}
+                {{ form.use_case(class="form-control", placeholder="ví dụ: Ví dụ: blog-writing, seo-copy, email-campaign") }}
+                {% if form.use_case.errors %}
+                    <div class="text-danger">{{ form.use_case.errors[0] }}</div>
+                {% endif %}
+            </div>
+            <!-- Preset lựa chọn hoặc tạo mới -->
+            <div class="mb-3 col-12 col-md-6">
+                {{ form.type.label(class="form-label", for="type") }}
+                {{ form.type(class="form-select") }}
+                {% if form.type.errors %}
+                    <div class="text-danger">{{ form.type.errors[0] }}</div>
+                {% endif %}
+            </div>
         </div>
         <!-- Tham số model -->
         <div class="row">
             <div class="col-md-4">
-                <label class="form-label">Temperature:</label>
-                <input type="number" step="0.1" name="temperature" value="0.7" class="form-control" min="0" max="1">
+                {{ form.temperature.label(class="form-label", for="temperature") }}
+                {{ form.temperature(class="form-control") }}
+                {% if form.temperature.errors %}
+                    <div class="text-danger">{{ form.temperature.errors[0] }}</div>
+                {% endif %}
             </div>
             <div class="col-md-4">
-                <label class="form-label">Top P:</label>
-                <input type="number" step="0.1" name="top_p" value="0.9" class="form-control" min="0" max="1">
+                {{ form.top_p.label(class="form-label", for="top_p") }}
+                {{ form.top_p(class="form-control") }}
+                {% if form.top_p.errors %}
+                    <div class="text-danger">{{ form.top_p.errors[0] }}</div>
+                {% endif %}
             </div>
             <div class="col-md-4">
-                <label class="form-label">Max Tokens:</label>
-                <input type="number" name="max_tokens" value="1024" class="form-control">
+                {{ form.max_tokens.label(class="form-label", for="max_tokens") }}
+                {{ form.max_tokens(class="form-control") }}
+                {% if form.max_tokens.errors %}
+                    <div class="text-danger">{{ form.max_tokens.errors[0] }}</div>
+                {% endif %}
             </div>
         </div>
         <div class="mt-3 mb-3">
-            <label class="form-label">Frequency Penalty:</label>
-            <input type="number" step="0.1" name="frequency_penalty" value="0.2" class="form-control" min="0" max="2">
+            {{ form.frequency_penalty.label(class="form-label", for="frequency_penalty") }}
+            {{ form.frequency_penalty(class="form-control") }}
+            {% if form.frequency_penalty.errors %}
+                <div class="text-danger">{{ form.frequency_penalty.errors[0] }}</div>
+            {% endif %}
         </div>
         <!-- Tính năng -->
         <fieldset class="border p-3 mb-3">
             <legend class="w-auto px-2">🧠 Tính năng hỗ trợ</legend>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="autocomplete" id="autocomplete" checked>
-                <label class="form-check-label" for="autocomplete">Tự động hoàn thành nội dung</label>
+                {{ form.autocomplete(class="form-check-input", id="autocomplete") }}
+                {{ form.autocomplete.label(class="form-label", for="autocomplete") }}
+                {% if form.autocomplete.errors %}
+                    <div class="text-danger">{{ form.autocomplete.errors[0] }}</div>
+                {% endif %}
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="summarize" id="summarize">
-                <label class="form-check-label" for="summarize">Tóm tắt nội dung</label>
+                {{ form.summarize(class="form-check-input", id="summarize") }}
+                {{ form.summarize.label(class="form-label", for="summarize") }}
+                {% if form.summarize.errors %}
+                    <div class="text-danger">{{ form.summarize.errors[0] }}</div>
+                {% endif %}
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="translate" id="translate">
-                <label class="form-check-label" for="translate">Dịch nội dung</label>
+                {{ form.translate(class="form-check-input", id="translate") }}
+                {{ form.translate.label(class="form-label", for="translate") }}
+                {% if form.translate.errors %}
+                    <div class="text-danger">{{ form.translate.errors[0] }}</div>
+                {% endif %}
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="multi_chat" id="multi_chat">
-                <label class="form-check-label" for="multi_chat">Chat đa lượt (multi-turn)</label>
+                {{ form.multi_chat(class="form-check-input", id="multi_chat") }}
+                {{ form.multi_chat.label(class="form-label", for="multi_chat") }}
+                {% if form.multi_chat.errors %}
+                    <div class="text-danger">{{ form.multi_chat.errors[0] }}</div>
+                {% endif %}
             </div>
-            <div class="form-check mt-2">
-                <input class="form-check-input" type="checkbox" name="is_default" id="is_default">
-                <label class="form-check-label" for="is_default">Đặt làm cấu hình mặc định</label>
+            <div class="form-check">
+                {{ form.is_default(class="form-check-input", id="is_default") }}
+                {{ form.is_default.label(class="form-label", for="is_default") }}
+                {% if form.is_default.errors %}
+                    <div class="text-danger">{{ form.is_default.errors[0] }}</div>
+                {% endif %}
             </div>
         </fieldset>
         <!-- JSON mở rộng -->
         <div class="mb-3">
-            <label class="form-label">🎯 Thông số bổ sung (JSON):</label>
-            <textarea name="features" rows="5" class="form-control" placeholder='{
-                "tone": "friendly",
-                "language": "vi",
-                "style": "blog",
-                "output_format": "html"
-                }'></textarea>
+            {{ form.features.label(class="form-label", for="features") }}
+            {{ form.features }}
+            {% if form.features.errors %}
+                <div class="text-danger">{{ form.features.errors[0] }}</div>
+            {% endif %}
         </div>
-        <button type="submit" class="btn btn-primary">💾 Lưu cấu hình</button>
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary">💾 Lưu cấu hình</button>
+            <a href="" class="btn btn-secondary">Quay lại</a>
+        </div>
     </form>
 
     <div class="mt-5">

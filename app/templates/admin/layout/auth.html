@@ -17,6 +17,7 @@
 	<link href="{{ url_for('static', filename='admin/css/bootstrap.min.css') }}" rel="stylesheet">
 	<link href="{{ url_for('static', filename='admin/css/app.css') }}" rel="stylesheet">
 	<link href="{{ url_for('static', filename='admin/css/icons.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     {% block styles %}{% endblock %}
 </head>
 <body>
@@ -48,8 +49,34 @@
 <script src="{{ url_for('static', filename='admin/plugins/simplebar/js/simplebar.min.js') }}"></script>
 <script src="{{ url_for('static', filename='admin/plugins/metismenu/js/metisMenu.min.js') }}"></script>
 <script src="{{ url_for('static', filename='admin/plugins/perfect-scrollbar/js/perfect-scrollbar.js') }}"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <!--app JS-->
 <script src="{{ url_for('static', filename='admin/js/app.js') }}"></script>
+<script>
+        // Hàm dùng để hiện toast
+        function showToast(message, type = "success") {
+            let bgColor = type === "success" ? "linear-gradient(to right, #00b09b, #96c93d)" :
+                          type === "danger" ? "linear-gradient(to right, #ff5f6d, #ffc371)" :
+                          "linear-gradient(to right, #2193b0, #6dd5ed)";
+            Toastify({
+                text: message,
+                duration: 4000,
+                gravity: "top",
+                position: "right",
+                backgroundColor: bgColor,
+                stopOnFocus: true
+            }).showToast();
+        }
+
+        // Hiển thị flash messages của Flask nếu có
+        document.addEventListener("DOMContentLoaded", function () {
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% for category, message in messages %}
+                    showToast("{{ message }}", "{{ category }}");
+                {% endfor %}
+            {% endwith %}
+        });
+    </script>
 {% block scripts %}{% endblock %}
 </body>
 </html>

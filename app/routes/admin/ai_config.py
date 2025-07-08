@@ -2,13 +2,13 @@ from flask import request, jsonify, flash, redirect, render_template, url_for
 from flask_login import login_required, current_user
 from app.controllers import AIConfigController
 from app.helpers.ai_configuration_helper import AIConfigurationHelper
-from app.repositories import AiConfigRepository
+from app.repositories import AIConfigRepository
 from app.routes.admin import admin_bp
-from app.services import AiConfigService
+from app.services import AIConfigService
 from app.utils.decorators import admin_required
 
 ai_config_controller = AIConfigController()
-service = AiConfigService(AiConfigRepository())
+service = AIConfigService(AIConfigRepository())
 
 # Load Model AI
 @admin_bp.route('/load-models', methods=['POST'])

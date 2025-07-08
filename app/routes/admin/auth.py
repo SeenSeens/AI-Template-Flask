@@ -1,10 +1,6 @@
 from flask import render_template, redirect, url_for
 from flask_login import logout_user
-
 from app.controllers import AuthController
-from app.helpers.forgot_password_form_helper import ForgotPasswordFormHelper
-from app.helpers.login_form_helper import LoginFormHelper
-from app.helpers.register_form_helper import RegisterFormHelper
 from app.routes.admin import admin_bp
 
 auth_controller = AuthController()
