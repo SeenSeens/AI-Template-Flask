@@ -2,12 +2,11 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SelectField
 from wtforms.validators import DataRequired
 
-
 class AIConfigurationHelper(FlaskForm):
-    token = StringField(
+    api_key = StringField(
         '🔐 API Token',
         validators=[
-            DataRequired(message='Vui lòng nhập api token'),
+            DataRequired(message='Vui lòng nhập api api key'),
         ]
     )
     provider = SelectField(

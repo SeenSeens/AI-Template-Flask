@@ -5,9 +5,56 @@
 {% include 'admin/components/breadcrumb.html' %}
 
 <div class="container-fluid">
+    <div class="mb-4">
+        <div style="width: 250px;">
+            {{ form.type(class="form-select", id="selectedType") }}
+            {% if form.type.errors %}
+                <div class="text-danger">{{ form.type.errors[0] }}</div>
+            {% endif %}
+        </div>
+        <h2>Danh sách provider</h2>
+        {% if presets %}
+        <div id="preset-wrapper" style="display: none;">
+            <table class="table table-bordered table-sm" id="preset-table">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Use Case</th>
+                    <th>Temperature</th>
+                    <th>Top P</th>
+                    <th>Max Tokens</th>
+                    <th>Default</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for preset in presets %}
+                <tr data-type="{{ preset.type }}">
+                    <td>{{ loop.index }}</td>
+                    <td>{{ preset.use_case }}</td>
+                    <td>{{ preset.temperature }}</td>
+                    <td>{{ preset.top_p }}</td>
+                    <td>{{ preset.max_tokens }}</td>
+                    <td>{% if preset.is_default %}✅{% endif %}</td>
+                    <td>
+                        <div class="d-flex order-actions">
+                        <a href="" class="text-primary"><i class="lni lni-eye"></i></a>
+                        <a href="" class="mx-2 text-warning"><i class="bx bxs-edit"></i></a>
+                        <a href="#" class="delete-term text-danger" data-id="{{ preset.id }}"><i class="bx bxs-trash"></i></a>
+                    </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+        <div id="preset-empty" class="alert alert-info">Chưa có preset nào được lưu.</div>
+        {% endif %}
+    </div>
+
     <form method="POST" action="{{ url_for('admin.config_content_ai') }}">
         {{ form.hidden_tag() }}
-        <h3 class="mb-4">⚙️ Cấu hình AI cho viết nội dung</h3>
+        <h2 class="mb-4">⚙️ Cấu hình AI cho viết nội dung</h2>
         <div class="row">
             <div class="mb-3 col-12 col-md-6">
                 {{ form.use_case.label(class="form-label", for="use_case") }}
@@ -147,5 +194,38 @@ document.getElementById("ai-content-form").addEventListener("submit", async func
         resultBox.style.display = "block";
     }
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const typeSelect = document.getElementById("selectedType");
+    const presetRows = document.querySelectorAll("#preset-table tbody tr");
+    const presetWrapper = document.getElementById("preset-wrapper");
+    const presetEmpty = document.getElementById("preset-empty");
+
+    function filterPresetTableByType() {
+        const selectedType = typeSelect.value;
+        let hasMatch = false;
+
+        presetRows.forEach(row => {
+            const rowType = row.getAttribute("data-type");
+            if (rowType === selectedType) {
+                row.style.display = "";
+                hasMatch = true;
+            } else {
+                row.style.display = "none";
+            }
+        });
+
+        if (selectedType) {
+            presetWrapper.style.display = hasMatch ? "block" : "none";
+            presetEmpty.style.display = hasMatch ? "none" : "block";
+        } else {
+            presetWrapper.style.display = "none";
+            presetEmpty.style.display = "none";
+        }
+    }
+
+    typeSelect.addEventListener("change", filterPresetTableByType);
+});
+
 </script>
 {% endblock %}

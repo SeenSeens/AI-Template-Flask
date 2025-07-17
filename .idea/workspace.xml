@@ -5,38 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bd8df8fa-d609-4de0-bbc3-ad54a90dbe92" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/helpers/ai_preset_form_helper.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/repositories/ai_preset_feature_repository.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/repositories/ai_preset_repository.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/services/ai_preset_feature_service.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/services/ai_preset_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/7cbe8f07-e426-4c1c-be09-4c809fade51e.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/7cbe8f07-e426-4c1c-be09-4c809fade51e.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/wiintek.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/wiintek.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/controllers/ai_preset_controller.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/routes/admin/ai_preset.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/project.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/config/page_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/config/page_config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/controllers/ai_config_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/ai_config_controller.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/controllers/auth_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/auth_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/helpers/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/helpers/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/ai_config_presets.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/ai_config_presets.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/ai_configs.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/ai_configs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/ai_preset_features.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/ai_preset_features.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/ai_presets.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/ai_presets.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/repositories/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/repositories/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/post_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/post_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/helpers/ai_configuration_helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/helpers/ai_configuration_helper.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/repositories/ai_config_repository.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/repositories/ai_config_repository.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/repositories/ai_preset_repository.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/repositories/ai_preset_repository.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/admin/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/admin/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/routes/admin/ai_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/admin/ai_config.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/routes/admin/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/admin/auth.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/services/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/services/ai_config_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/ai_config_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/services/auth_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/auth_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/ai_preset_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/ai_preset_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/admin/components/breadcrumb.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/admin/components/breadcrumb.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/admin/layout/auth.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/admin/layout/auth.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/admin/layout/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/admin/layout/base.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/admin/pages/ai/ai_configuration.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/admin/pages/ai/ai_configuration.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/admin/pages/ai/all_ai.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/admin/pages/ai/all_ai.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/admin/pages/ai/content_ai.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/admin/pages/ai/content_ai.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/README" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/alembic.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/env.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/script.py.mako" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/versions/fdad66d37bac_initial_migration.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -214,8 +206,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-PY-251.26927.74" />
-        <option value="bundled-python-sdk-657d8234b839-64d779b69b7a-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-251.26927.74" />
+        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-PY-251.26927.90" />
+        <option value="bundled-python-sdk-41e8cd69c857-64d779b69b7a-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-251.26927.90" />
       </set>
     </attachedChunks>
   </component>
@@ -255,6 +247,9 @@
       <workItem from="1751799524952" duration="16960000" />
       <workItem from="1751871099908" duration="4443000" />
       <workItem from="1751955170811" duration="11707000" />
+      <workItem from="1751980295988" duration="3052000" />
+      <workItem from="1751990123709" duration="12117000" />
+      <workItem from="1752714722511" duration="1097000" />
     </task>
     <servers />
   </component>

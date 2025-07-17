@@ -22,7 +22,7 @@
 	<link rel="stylesheet" href="{{ url_for('static', filename='admin/css/dark-theme.css') }}" />
 	<link rel="stylesheet" href="{{ url_for('static', filename='admin/css/semi-dark.css') }}" />
 	<link rel="stylesheet" href="{{ url_for('static', filename='admin/css/header-colors.css') }}" />
-	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+	<link rel="stylesheet" href="{{ url_for('static', filename='admin/css/toastify.min.css') }}">
     {% block styles %}{% endblock %}
 </head>
 <body>
@@ -61,7 +61,7 @@
     <script src="{{ url_for('static', filename='admin/plugins/metismenu/js/metisMenu.min.js') }}"></script>
     <script src="{{ url_for('static', filename='admin/plugins/perfect-scrollbar/js/perfect-scrollbar.js') }}"></script>
     <script src="{{ url_for('static', filename='admin/js/axios.min.js') }}"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="{{ url_for('static', filename='admin/js/toastify-js.js') }}"></script>
     <script src="{{ url_for('static', filename='admin/plugins/tinymce/tinymce.min.js') }}"></script>
     <script src="{{ url_for('static', filename='admin/js/tinymce-jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='admin/js/tinymce.js') }}"></script>

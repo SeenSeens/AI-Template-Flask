@@ -7,3 +7,6 @@ class AIPresetRepository:
         db.session.add(ai_preset)
         db.session.commit()
         return ai_preset
+
+    def get_all_ai_presets(self):
+        return AIPreset.query.all()

@@ -5,6 +5,8 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import PromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
 from openai import OpenAI
+
+from app import AIConfig
 from app.repositories.ai_config_repository import AIConfigRepository
 
 
@@ -101,20 +103,20 @@ class AIConfigService:
 
 
     # Lưu cấu hình AI vào DB
-    def validate_and_save_config(self, data: dict, user_id: int):
-        required_fields = ['provider', 'api_key', 'model_name']
-        for field in required_fields:
-            if not data.get(field):
-                return False, f"Trường {field} là bắt buộc."
-
-        if not self._test_api_key(data['provider'], data['api_key'], data['model_name']):
-            return False, "API key hoặc model không hợp lệ."
-
-        try:
-            self.repository.save_or_update_config(user_id, data)
-            return True, "Cấu hình đã được lưu thành công."
-        except Exception as e:
-            return False, f"Lỗi khi lưu: {str(e)}"
+    # def validate_and_save_config(self, data: dict, user_id: int):
+    #     required_fields = ['provider', 'api_key', 'model_name']
+    #     for field in required_fields:
+    #         if not data.get(field):
+    #             return False, f"Trường {field} là bắt buộc."
+    #
+    #     if not self._test_api_key(data['provider'], data['api_key'], data['model_name']):
+    #         return False, "API key hoặc model không hợp lệ."
+    #
+    #     try:
+    #         self.repository.save_or_update_config(user_id, data)
+    #         return True, "Cấu hình đã được lưu thành công."
+    #     except Exception as e:
+    #         return False, f"Lỗi khi lưu: {str(e)}"
 
     def _test_api_key(self, provider, api_key, model_name):
         try:
@@ -141,11 +143,20 @@ class AIConfigService:
         except Exception:
             return False
 
+    def get_ai_config_id(self, id_ai_config):
+        return self.repository.get_ai_config_id(id_ai_config)
+
     def get_user_config(self, user_id):
         return self.repository.get_config_by_user(user_id)
 
     def create_ai_config(self, **kwargs):
         return self.repository.create_ai_config(**kwargs)
+
+    def update_ai_config(self, id_ai_config, **kwargs):
+        return self.repository.update_ai_config(id_ai_config, **kwargs)
+
+    def delete_ai_config(self, id_ai_config):
+        return self.repository.delete_ai_config(id_ai_config)
 
     def get_all_configs(self):
         return self.repository.get_all_configs()

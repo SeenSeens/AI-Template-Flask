@@ -1,5 +1,7 @@
 from flask import render_template, redirect, url_for, flash
 from flask_login import login_user
+
+from app.helpers.page_config_helper import get_page_config
 from app.models import User
 from app.helpers.forgot_password_form_helper import ForgotPasswordFormHelper
 from app.helpers.login_form_helper import LoginFormHelper
@@ -11,7 +13,8 @@ from app.utils import auth
 auth_service = AuthService(AuthRepository())
 
 class AuthController:
-    def register(self):
+    def register(self, page_type, sub_type):
+        config = get_page_config(page_type, sub_type)
         form = RegisterFormHelper()
         if form.validate_on_submit():
             users = {
@@ -27,9 +30,10 @@ class AuthController:
                 return redirect(url_for('admin.login'))
             else:
                 flash(message, "danger")
-        return render_template('admin/pages/auth/register.html', form=form)
+        return render_template(config['page_template'], **config, page_type=page_type, form=form)
 
-    def login(self):
+    def login(self, page_type, sub_type):
+        config = get_page_config(page_type, sub_type)
         form = LoginFormHelper()
         if form.validate_on_submit():
             user = {
@@ -43,8 +47,9 @@ class AuthController:
                 return redirect(url_for('admin.dashboard'))
             else:
                 flash("Tài khoản hoặc mật khẩu không đúng.", "danger")
-        return render_template('admin/pages/auth/login.html', form=form)
+        return render_template(config['page_template'], **config, page_type=page_type, form=form)
 
-    def forgot_password(self):
+    def forgot_password(self, page_type, sub_type):
+        config = get_page_config(page_type, sub_type)
         form = ForgotPasswordFormHelper()
-        return render_template('admin/pages/auth/forgot-password.html', form=form)
+        return render_template(config['page_template'], **config, page_type=page_type, form=form)

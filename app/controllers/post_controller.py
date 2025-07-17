@@ -56,7 +56,6 @@ class PostController:
 
         if not post:
             flash("Không tìm thấy bài viết!", "danger")
-            return redirect(url_for('admin.posts', page_type=page_type))
 
         form = PostFormHelper(obj=post)
 

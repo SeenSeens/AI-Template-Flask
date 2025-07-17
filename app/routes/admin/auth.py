@@ -10,15 +10,15 @@ def admin_redirect():
 
 @admin_bp.route('/register', methods = [ 'GET', 'POST'])
 def register() :
-    return auth_controller.register()
+    return auth_controller.register('auth', 'register')
 
 @admin_bp.route('/login', methods = [ 'GET', 'POST'])
 def login() :
-    return auth_controller.login()
+    return auth_controller.login('auth', 'login')
 
 @admin_bp.route('/forgot-password', methods = [ 'GET', 'POST'])
 def forgot_password() :
-    return auth_controller.forgot_password()
+    return auth_controller.forgot_password('auth', 'forgot_password')
 
 @admin_bp.route('/logout')
 def logout() :

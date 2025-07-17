@@ -1,4 +1,16 @@
 PAGE_CONFIG = {
+    'auth': {
+        'register': {
+            'page_template': 'admin/pages/auth/register.html',
+        },
+        'login': {
+            'page_template': 'admin/pages/auth/login.html',
+        },
+        'logout': {},
+        'forgot_password': {
+            'page_template': 'admin/pages/auth/forgot-password.html',
+        }
+    },
     'category': {
         'page_title': 'Danh mục',
         'button_add': 'Thêm danh mục',
@@ -74,6 +86,12 @@ PAGE_CONFIG = {
     'ai': {
         'configuration': {
             'page_title': 'Cấu hình AI',
+            'button_add': '💾 Lưu cấu hình',
+            'page_template': 'admin/pages/ai/ai_configuration.html',
+        },
+        'edit-configuration': {
+            'page_title': 'Cập nhật cấu hình AI',
+            'button_edit': '💾 Cập nhật cấu hình',
             'page_template': 'admin/pages/ai/ai_configuration.html',
         },
         'all_ai': {

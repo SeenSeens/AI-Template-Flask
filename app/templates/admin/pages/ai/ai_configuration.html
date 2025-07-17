@@ -2,13 +2,14 @@
 {% block title %}{{ page_title }}{% endblock %}
 {% block content %}
 {% include 'admin/components/breadcrumb.html' %}
+    {{ ai_config }}
 <div class="container-fluid">
-    <form class="row gy-3" method="post" action="{{ url_for('admin.ai_configuration') }}">
+    <form class="row gy-3" method="post" action="{% if not ai_config %} {{ url_for('admin.ai_configuration') }} {% else %} {{ url_for('admin.update_ai_config') }}?id_ai_config={{ ai_config.id }} {% endif %}">
          {{ form.csrf_token }}
         <!-- API Token -->
         <div class="col-12">
-            {{ form.token.label(class="form-label") }}
-            {{ form.token(class="form-control", placeholder="Nhập token API…") }}
+            {{ form.api_key.label(class="form-label") }}
+            {{ form.api_key(class="form-control", placeholder="Nhập token API…") }}
         </div>
         <!-- Provider -->
         <div class="col-md-6">
@@ -26,7 +27,7 @@
             {{ form.model_name(class="form-select") }}
         </div>
         <div class="col-12 text-end">
-            <button type="submit" class="btn btn-sm btn-primary">💾 Lưu cấu hình</button>
+            <button type="submit" class="btn btn-sm btn-primary">{% if not ai_config %} {{ button_add }} {% else %} {{ button_edit }} {% endif %}</button>
             <button type="button" id="btn-test-connection" class="btn btn-sm btn-success" data-action="test">🧪 Kiểm tra kết nối</button>
         </div>
     </form>
@@ -37,7 +38,7 @@
 <script>
 class AiConfigurationManager {
     constructor() {
-        this.tokenInput = document.getElementById("token");
+        this.tokenInput = document.getElementById("api_key");
         this.providerSelect = document.getElementById("provider");
         this.taskSelect = document.getElementById("task_type");
         this.modelSelect = document.getElementById("model_name");

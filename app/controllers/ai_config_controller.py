@@ -1,17 +1,11 @@
 from flask import render_template, request, jsonify, flash, redirect, url_for
 from flask_login import current_user
 from app.helpers.ai_configuration_helper import AIConfigurationHelper
-from app.helpers.ai_preset_form_helper import AIPresetFormHelper
 from app.helpers.page_config_helper import get_page_config
-from app.repositories import AIConfigRepository, AIPresetFeatureRepository
-from app.repositories.ai_preset_repository import AIPresetRepository
+from app.repositories import AIConfigRepository
 from app.services.ai_config_service import AIConfigService
-from app.services.ai_preset_feature_service import AIPresetFeatureService
-from app.services.ai_preset_service import AIPresetService
 
 service = AIConfigService(AIConfigRepository())
-servicePreset = AIPresetService(AIPresetRepository())
-servicePresetFeature = AIPresetFeatureService(AIPresetFeatureRepository())
 
 class AIConfigController:
 
@@ -59,10 +53,11 @@ class AIConfigController:
 
     def ai_configuration(self, page_type, sub_type):
         config = get_page_config(page_type, sub_type)
+
         form = AIConfigurationHelper()
-        if form.token.data and form.provider.data == 'huggingface':
+        if form.api_key.data and form.provider.data == 'huggingface':
             try:
-                models = service.fetch_models(form.token.data, 'huggingface')
+                models = service.fetch_models(form.api_key.data, 'huggingface')
                 form.model_name.choices = [('', '-- Chọn model --')] + [
                     (
                         m["id"],  # value
@@ -79,45 +74,57 @@ class AIConfigController:
                 'provider': form.provider.data,
                 'user_id': current_user.id,
                 'model_name': form.model_name.data,
-                'api_key': form.token.data,
+                'api_key': form.api_key.data,
             }
             service.create_ai_config(**ai_config_data)
             flash('Cấu hình AI đã được lưu thành công.', 'success')
             return redirect(url_for('admin.ai_configuration'))
         return render_template(config['page_template'], **config, form=form, page_type=page_type)
 
+    def update_ai_config(self, page_type, sub_type, id_ai_config):
+        config = get_page_config(page_type, sub_type)
+
+        ai_config = service.get_ai_config_id(id_ai_config)
+
+        if not ai_config:
+            flash("Không tìm thấy cấu hình AI!", "danger")
+            return redirect(url_for('admin.all_ai', page_type=page_type))
+        form = AIConfigurationHelper(obj=ai_config)
+
+        if (form.api_key.data or ai_config.api_key) and (
+                form.provider.data == 'huggingface' or ai_config.provider == 'huggingface'):
+            try:
+                token = form.api_key.data or ai_config.api_key
+                models = service.fetch_models(token, 'huggingface')
+                form.model_name.choices = [('', '-- Chọn model --')] + [
+                    (m["id"], f'{m["id"]} ❤️ {m.get("likes", 0)}')
+                    for m in models
+                ]
+            except Exception as e:
+                flash(f"Lỗi khi tải model Hugging Face: {str(e)}", "danger")
+        if form.validate_on_submit():
+            ai_config_data = {
+                'provider': form.provider.data,
+                'user_id': current_user.id,
+                'model_name': form.model_name.data,
+                'api_key': form.api_key.data,
+            }
+
+            try:
+                service.update_ai_config(ai_config, **ai_config_data)
+                flash("✅ Cập nhật cấu hình AI thành công.", "success")
+                return redirect(url_for('admin.edit_ai_config') + f"?id_ai_config={ai_config.id}")
+            except Exception as e:
+                flash(f"❌ Lỗi khi cập nhật: {str(e)}", "danger")
+        return render_template(config['page_template'], **config, form=form, page_type=page_type, ai_config=ai_config)
+
+    def delete_ai_config(self, id_ai_config):
+        service.delete_ai_config(id_ai_config)
+
     def all_ai(self, page_type, sub_type):
         config = get_page_config(page_type, sub_type)
         all_ai = service.get_all_configs()
         return render_template(config['page_template'], **config, page_type=page_type, all_ai=all_ai)
-
-    def config_content_ai(self, page_type, sub_type):
-        config = get_page_config(page_type, sub_type)
-        form = AIPresetFormHelper()
-        if form.validate_on_submit():
-            ai_preset_data = {
-                'use_case': form.use_case.data,
-                'type': form.type.data,
-                'temperature': form.temperature.data,
-                'top_p': form.top_p.data,
-                'max_tokens': form.max_tokens.data,
-                'frequency_penalty': form.frequency_penalty.data,
-            }
-            preset = servicePreset.create_ai_preset(**ai_preset_data)
-            ai_preset_feature_data = {
-                'preset_id': preset.id,
-                'is_default': form.is_default.data,
-                'autocomplete': form.autocomplete.data,
-                'summarize': form.summarize.data,
-                'translate': form.translate.data,
-                'multi_chat': form.multi_chat.data,
-                'features': form.features.data if hasattr(form, 'features') else [],
-            }
-
-            servicePresetFeature.create_ai_preset_feature(**ai_preset_feature_data)
-            flash('Cấu hình AI đã được lưu thành công.', 'success')
-            # return redirect(url_for('admin.ai_configuration'))
-        return render_template(config['page_template'], **config, page_type=page_type, form=form)
 
     def config_design_ai(self, page_type, sub_type):
         config = get_page_config(page_type, sub_type)

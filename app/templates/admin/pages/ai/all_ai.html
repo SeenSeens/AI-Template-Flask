@@ -17,7 +17,7 @@
         </thead>
         <tbody>
             {% for ai in all_ai %}
-                <tr>
+                <tr id="post-{{ ai.id }}">
                     <td>{{ loop.index }}</td>
                     <td>{{ ai.provider }}</td>
                     <td>{{ ai.model_name }}</td>
@@ -26,7 +26,7 @@
                     <td>
                         <div class="d-flex order-actions">
                             <a href="" class="text-primary"><i class="lni lni-eye"></i></a>
-                            <a href="" class="mx-2 text-warning"><i class="bx bxs-edit"></i></a>
+                            <a href="{{ url_for('admin.update_ai_config', id_ai_config=ai.id) }}" class="mx-2 text-warning"><i class="bx bxs-edit"></i></a>
                             <a href="#" class="delete-ai text-danger" data-id="{{ ai.id }}"><i class="bx bxs-trash"></i></a>
                         </div>
                     </td>
@@ -39,4 +39,77 @@
         </tbody>
     </table>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+class AIConfigDeleter {
+    constructor(selector) {
+        this.buttons = document.querySelectorAll(selector);
+        this.init();
+    }
+
+    init() {
+        this.buttons.forEach(button => {
+            button.addEventListener('click', (event) => this.handleDelete(event, button));
+        });
+    }
+
+    async handleDelete(event, button) {
+        event.preventDefault();
+        const idAIConfig = button.dataset.id;
+        if (!idAIConfig) return;
+
+        if (!confirm('Bạn có chắc muốn xoá cấu hình này không?')) return;
+
+        try {
+            const response = await axios.delete(`/admin/delete-ai-config?post_id=${idAIConfig}`, {
+                data: { post_id: idAIConfig },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': this.getCSRFToken(),
+                }
+            });
+
+            const data = response.data;
+
+            if (data.success) {
+                const row = document.getElementById(`post-${idAIConfig}`);
+                if (row) row.remove();
+
+                // Nếu tất cả dòng đã bị xoá → thêm thông báo
+                const tbody = document.querySelector("table tbody");
+                const remainingRows = tbody.querySelectorAll("tr");
+                if (remainingRows.length === 0) {
+                    const emptyRow = document.createElement("tr");
+                    emptyRow.innerHTML = `<td colspan="7" class="text-center">Chưa có cấu hình nào</td>`;
+                    tbody.appendChild(emptyRow);
+                }
+
+                // Hiển thị thông báo nếu muốn
+                Toastify({
+                    text: response.data.message || "✅ Đã xoá thành công",
+                    duration: 3000,
+                    gravity: "top",
+                    position: "right",
+                    backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)"
+                }).showToast();
+            }
+
+        } catch (err) {
+            console.error('Xoá lỗi:', err);
+            alert('Có lỗi xảy ra.');
+        }
+    }
+
+    getCSRFToken() {
+        const token = document.querySelector('meta[name="csrf-token"]');
+        return token ? token.getAttribute('content') : '';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    new AIConfigDeleter('.delete-ai');
+});
+</script>
 {% endblock %}

@@ -7,3 +7,6 @@ class AIPresetService:
 
     def create_ai_preset(self, **kwargs):
         return self.repository.create_ai_preset(**kwargs)
+
+    def get_all_ai_presets(self):
+        return self.repository.get_all_ai_presets()
