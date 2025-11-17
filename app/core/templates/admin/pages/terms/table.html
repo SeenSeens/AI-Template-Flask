@@ -1,0 +1,89 @@
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Tên</th>
+                <th>Mô tả</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for term in terms %}
+            <tr id="term-{{ term.id }}">
+                <td>{{ loop.index }}</td>
+                <td>{{ term.name }}</td>
+                <td class="text-wrap">{{ term.description | safe }}</td>
+                <td>
+                    <div class="d-flex order-actions">
+                        <a href="#" class="text-primary"><i class="lni lni-eye"></i></a>
+                        <a href="{{ url_for('admin.term_edit', page_type=page_type, term_id=term.id) }}" class="mx-2 text-warning"><i class="bx bxs-edit"></i></a>
+                        <a href="#" class="delete-term text-danger" data-id="{{ term.id }}" data-type="{{ page_type }}"><i class="bx bxs-trash"></i></a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% block scripts %}
+<script>
+class TermDeleter {
+    constructor(selector) {
+        this.buttons = document.querySelectorAll(selector);
+        this.init();
+    }
+
+    init() {
+        this.buttons.forEach(button => {
+            button.addEventListener('click', (event) => this.handleDelete(event, button));
+        });
+    }
+
+    async handleDelete(event, button) {
+        event.preventDefault();
+        const termId = button.dataset.id;
+        const pageType = button.dataset.type;
+        console.log(pageType)
+        if (!termId || !pageType) return;
+
+        if (!confirm('Bạn có chắc chắn muốn xoá term này?')) return;
+
+        try {
+            const response = await fetch(`/admin/term/delete?term_id=${termId}&page_type=${pageType}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': this.getCSRFToken()
+                }
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                const row = document.getElementById(`term-${termId}`);
+                if (row) row.remove();
+                location.reload(); // để hiển thị flash
+            } else {
+                alert(data.message || 'Xoá thất bại');
+            }
+        } catch (err) {
+            console.error('Xoá lỗi:', err);
+            alert('Có lỗi xảy ra.');
+        }
+    }
+
+    getCSRFToken() {
+        const token = document.querySelector('meta[name="csrf-token"]');
+        return token ? token.getAttribute('content') : '';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    new TermDeleter('.delete-term');
+});
+</script>
+
+
+{% endblock %}

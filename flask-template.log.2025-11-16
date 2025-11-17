@@ -1,0 +1,86 @@
+2025-11-16 08:21:09,867 ERROR: Exception on /admin/register [POST] [in /www/wiintek/.venv/lib/python3.14/site-packages/flask/app.py:1414]
+Traceback (most recent call last):
+  File "/www/wiintek/.venv/lib/python3.14/site-packages/wtforms/validators.py", line 401, in __call__
+    import email_validator
+ModuleNotFoundError: No module named 'email_validator'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/www/wiintek/.venv/lib/python3.14/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/www/wiintek/.venv/lib/python3.14/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/www/wiintek/.venv/lib/python3.14/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/www/wiintek/.venv/lib/python3.14/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/www/wiintek/app/routes/admin/auth.py", line 13, in register
+    return auth_controller.register('auth', 'register')
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/www/wiintek/app/controllers/auth_controller.py", line 19, in register
+    if form.validate_on_submit():
+       ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/www/wiintek/.venv/lib/python3.14/site-packages/flask_wtf/form.py", line 86, in validate_on_submit
+    return self.is_submitted() and self.validate(extra_validators=extra_validators)
+                                   ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/www/wiintek/.venv/lib/python3.14/site-packages/wtforms/form.py", line 330, in validate
+    return super().validate(extra)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "/www/wiintek/.venv/lib/python3.14/site-packages/wtforms/form.py", line 147, in validate
+    if not field.validate(self, extra):
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/www/wiintek/.venv/lib/python3.14/site-packages/wtforms/fields/core.py", line 234, in validate
+    stop_validation = self._run_validation_chain(form, chain)
+  File "/www/wiintek/.venv/lib/python3.14/site-packages/wtforms/fields/core.py", line 254, in _run_validation_chain
+    validator(form, self)
+    ~~~~~~~~~^^^^^^^^^^^^
+  File "/www/wiintek/.venv/lib/python3.14/site-packages/wtforms/validators.py", line 403, in __call__
+    raise Exception(
+        "Install 'email_validator' for email validation support."
+    ) from exc
+Exception: Install 'email_validator' for email validation support.
+2025-11-16 08:21:47,755 ERROR: Exception on /admin/register [POST] [in /www/wiintek/.venv/lib/python3.14/site-packages/flask/app.py:1414]
+Traceback (most recent call last):
+  File "/www/wiintek/.venv/lib/python3.14/site-packages/wtforms/validators.py", line 401, in __call__
+    import email_validator
+ModuleNotFoundError: No module named 'email_validator'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/www/wiintek/.venv/lib/python3.14/site-packages/flask/app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/www/wiintek/.venv/lib/python3.14/site-packages/flask/app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/www/wiintek/.venv/lib/python3.14/site-packages/flask/app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/www/wiintek/.venv/lib/python3.14/site-packages/flask/app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/www/wiintek/app/routes/admin/auth.py", line 13, in register
+    return auth_controller.register('auth', 'register')
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/www/wiintek/app/controllers/auth_controller.py", line 19, in register
+    if form.validate_on_submit():
+       ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/www/wiintek/.venv/lib/python3.14/site-packages/flask_wtf/form.py", line 86, in validate_on_submit
+    return self.is_submitted() and self.validate(extra_validators=extra_validators)
+                                   ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/www/wiintek/.venv/lib/python3.14/site-packages/wtforms/form.py", line 330, in validate
+    return super().validate(extra)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "/www/wiintek/.venv/lib/python3.14/site-packages/wtforms/form.py", line 147, in validate
+    if not field.validate(self, extra):
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/www/wiintek/.venv/lib/python3.14/site-packages/wtforms/fields/core.py", line 234, in validate
+    stop_validation = self._run_validation_chain(form, chain)
+  File "/www/wiintek/.venv/lib/python3.14/site-packages/wtforms/fields/core.py", line 254, in _run_validation_chain
+    validator(form, self)
+    ~~~~~~~~~^^^^^^^^^^^^
+  File "/www/wiintek/.venv/lib/python3.14/site-packages/wtforms/validators.py", line 403, in __call__
+    raise Exception(
+        "Install 'email_validator' for email validation support."
+    ) from exc
+Exception: Install 'email_validator' for email validation support.

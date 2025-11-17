@@ -15,14 +15,15 @@ This is a base template for Flask web applications. It provides a structured sta
 
 1. Clone the repository.
 2. Copy `.env.example` to `.env` and set your environment variables.
-3. Install dependencies: `pip install -r requirements.txt`.
-4. Run the application: `flask run`.
+3. Create an environment: `python3 -m venv .venv`
+4. Activate the environment: `. .venv/bin/activate`
+5. Install dependencies: `pip install -r requirements.txt`.
+6. Run the application: `flask run --host=0.0.0.0 --port=5000`.
 
 ## Flask db migrate
 - flask db init
 - flask db migrate -m "Initial migration."
 - flask db upgrade
-- 
 ## Project Structure
 
 - `app/`: Application package containing the Blueprints, static files, templates, and routes.
