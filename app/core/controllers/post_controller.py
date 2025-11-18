@@ -40,7 +40,7 @@ class PostController:
                 'author_id': current_user.id,
             }
             try:
-                post_service.create_post( **post_data)
+                post_service.create( **post_data)
                 if status == 'draft':
                     flash("Lưu nháp thành công!", "info")
                 else:
@@ -52,7 +52,7 @@ class PostController:
     def edit_post(self, page_type, sub_type, post_id):
         config = get_page_config(page_type, sub_type)
 
-        post = post_service.get_post( post_id)
+        post = post_service.get( post_id)
 
         if not post:
             flash("Không tìm thấy bài viết!", "danger")
@@ -77,7 +77,7 @@ class PostController:
                 'author_id': current_user.id,
             }
             try:
-                post_service.update_post(post_id, **post_data)
+                post_service.update(post_id, **post_data)
                 if status == 'draft':
                     flash("Lưu nháp thành công!", "info")
                 else:
@@ -96,7 +96,7 @@ class PostController:
 
     def delete_post(self, page_type, post_id):
         try:
-            post_service.delete_post(post_id)
+            post_service.delete(post_id)
             flash("Đã xóa bài viết!", "success")
         except Exception as e:
             flash(f"Lỗi khi xóa bài viết: {str(e)}", "danger")

@@ -38,17 +38,20 @@ class TermController:
     def edit_term(self, page_type, sub_type, term_id):
         config = get_page_config(page_type, sub_type)
 
-        term = term_service.get_term(term_id)
+        term = term_service.get(term_id)
         if not term:
             return "Không tìm thấy", 404
 
         form = TermFormHelper(obj=term)
 
         if form.validate_on_submit():
-            name = form.name.data
-            slug = form.slug.data
-            description = form.description.data
-            term_service.update_term(term_id, name, slug, description)
+
+            term_data = {
+                'name' : form.name.data,
+                'slug' : form.slug.data,
+                'description' : form.description.data
+            }
+            term_service.update(term_id, **term_data)
             flash('Cập nhật thành công', 'success')
             return redirect(url_for('admin.terms', page_type=page_type))
 
@@ -65,7 +68,7 @@ class TermController:
 
     def delete_term(self, page_type, term_id):
         try:
-            term_service.delete_term(term_id)
+            term_service.delete(term_id)
             flash("Đã xóa chuyên mục/thẻ!", "success")
         except Exception as e:
             flash(f"Lỗi khi xóa chuyên mục/thẻ: {str(e)}", "danger")

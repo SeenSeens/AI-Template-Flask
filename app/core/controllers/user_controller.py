@@ -1,5 +1,4 @@
 from flask import render_template, flash, redirect, url_for, request
-
 from app.core import db
 from app.core.helpers.page_config_helper import get_page_config
 from app.core.helpers.user_form_helper import UserFormHelper
@@ -13,12 +12,12 @@ user_meta_service = UserMetaService(UserMetaRepository())
 class UserController:
     def show_users(self, page_type, sub_type=None):
         config = get_page_config(page_type, sub_type)
-        users = user_service.get_users()
+        users = user_service.get_all()
         return render_template(config['page_template'], **config, users=users)
 
     def user_profile(self, page_type, sub_type=None, user_id=None):
         config = get_page_config(page_type, sub_type)
-        user = user_service.get_user(user_id)
+        user = user_service.get(user_id)
         form = UserMetaFormHelper(obj=user)
 
         # Load thêm từ user_meta (nếu có phone, mobile, address trong đó)
@@ -63,7 +62,7 @@ class UserController:
 
     def edit_user(self, page_type, sub_type, user_id):
         config = get_page_config(page_type, sub_type)
-        user = user_service.get_user(user_id)
+        user = user_service.get(user_id)
         if not user:
             flash("Người dùng không tồn tại!", "danger")
             return redirect(url_for('admin.users'))
@@ -93,7 +92,7 @@ class UserController:
 
     def delete_user(self, user_id):
         try:
-            user_service.delete_user(user_id)
+            user_service.delete(user_id)
             flash("Đã xóa người dùng!", "success")
         except Exception as e:
             flash(f"Lỗi khi xóa người dùng: {str(e)}", "danger")

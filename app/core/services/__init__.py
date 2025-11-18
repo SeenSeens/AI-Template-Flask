@@ -1,3 +1,4 @@
+from .base_service import BaseService
 from .auth_service import AuthService
 from .user_service import UserService
 from .user_meta_service import UserMetaService

@@ -83,26 +83,29 @@ PAGE_CONFIG = {
             'page_template': 'admin/pages/users/profile.html'
         },
     },
-    'overview': {
-        'page_title': 'Tổng quan',
-        'page_template': 'admin/pages/settings/overview.html'
+    'setting': {
+        'general': {
+            'page_title': 'Cài đặt tổng quan',
+            'page_template': 'admin/pages/settings/overview.html'
+        },
+        'writing': {
+            'page_title': 'Cài đặt viết',
+            'page_template': 'admin/pages/settings/write.html'
+        },
+        'reading': {
+            'page_title': 'Cài đặt đọc',
+            'page_template': 'admin/pages/settings/read.html'
+        },
+        'discussion': {
+            'page_title': 'Cài đặt bình luận',
+            'page_template': 'admin/pages/settings/comment.html'
+        },
+        'media': {
+            'page_title': 'Cài đặt media',
+            'page_template': 'admin/pages/settings/media.html'
+        },
     },
-    'write': {
-        'page_title': 'Viết',
-        'page_template': 'admin/pages/settings/write.html'
-    },
-    'read': {
-        'page_title': 'Đọc',
-        'page_template': 'admin/pages/settings/read.html'
-    },
-    'comment': {
-        'page_title': 'Bình luận',
-        'page_template': 'admin/pages/settings/comment.html'
-    },
-    'media': {
-        'page_title': 'Media',
-        'page_template': 'admin/pages/settings/media.html'
-    },
+
     'library': {
         'page_title': 'Thư viện',
         'page_template': 'admin/pages/files/library.html'
